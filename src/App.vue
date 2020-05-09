@@ -1,15 +1,20 @@
 <template>
   <div class="app">
     <div class="background"/>
+    <nav-bar></nav-bar>
     <router-view>
     </router-view>
   </div>
 </template>
 
 <script>
+import NavBar from './components/navbar.vue';
 
 export default {
   name: 'App',
+  components: {
+    NavBar,
+  }
 }
 </script>
 
@@ -21,6 +26,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   height: 100%;
+  max-width: 100%;
 }
 
 html {
@@ -37,7 +43,7 @@ body {
   display: block;
   position: fixed;
   top: 0px;
-  height: 105%;
+  height: 100%;
   width: 100%;
   background-image: url(./assets/background.png);
   background-size: 100% 100%;
