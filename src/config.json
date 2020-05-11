@@ -1,4 +1,10 @@
 {
+  "api": {
+    "fortnite": "fortniteapi.io"
+  },
+  "auth": {
+    "fortnite": "e6ead67c-d6da606e-3a775420-697e1d5e"
+  },
   "cognito": {
     "REGION": "ap-southeast-2",
     "USER_POOL_ID": "ap-southeast-2_EIeH0T5E8",

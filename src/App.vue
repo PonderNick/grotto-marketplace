@@ -50,4 +50,9 @@ body {
   background-repeat: no-repeat;
   z-index: -1;
 }
+
+.row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
 </style>
