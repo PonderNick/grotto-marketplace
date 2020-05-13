@@ -34,54 +34,22 @@
           <div class="row h-100 w-100">
             <div class="col-2 mx-auto no-side-padding">
               <div class="filters-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
-                <div class="accordion" id="filter-collapse-list">
-                  <div class="filter-card">
-                    <div class="card-header" id="filter-header">
-                      <h2 class="mb-0">
-                        <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          Type
-                        </button>
-                      </h2>
-                    </div>
-                    <div id="collapseOne" class="collapse show" aria-labelledby="filter-header" data-parent="#filter-collapse-list">
-                      <div class="card-body">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                          </div>
-                          <select v-model="types.selected" v-on:change="addFilter('type', types.selected)" class="custom-select" id="inputGroupSelect01">
-                            <option disabled>Please select one</option>
-                            <option v-for="option in types.options" v-bind:key="option.id" :value="option.value">{{option.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="accordion" id="rarity-collapse-list">
-                  <div class="filter-card">
-                    <div class="card-header" id="rarity-header">
-                      <h2 class="mb-0">
-                        <button class="btn btn-light w-100" type="button" data-toggle="collapse" data-target="#rarity-list" aria-expanded="true" aria-controls="collapseOne">
-                          Rarity
-                        </button>
-                      </h2>
-                    </div>
-                    <div id="rarity-list" class="collapse show" aria-labelledby="filter-header" data-parent="#rarity-collapse-list">
-                      <div class="card-body">
-                        <div class="input-group mb-3">
-                          <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                          </div>
-                          <select v-model="rarity.selected" v-on:change="addFilter('rarity', rarity.selected)" class="custom-select" id="inputGroupSelect01">
-                            <option disabled>Please select one</option>
-                            <option v-for="option in rarity.options" v-bind:key="option.id" :value="option.value">{{option.name}}</option>
-                          </select>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <accordion
+                  title="Type"
+                  filterBy="type"
+                  :selectedItem="types.selected"
+                  :onChangeEvent="addFilter"
+                  :options="types.options"
+                  >
+                </accordion>
+                <accordion
+                  title="Rarity"
+                  filterBy="rarity"
+                  :selectedItem="rarity.selected"
+                  :onChangeEvent="addFilter"
+                  :options="rarity.options"
+                  >
+                </accordion>
                 <button class="btn btn-outline-dark w-100" v-on:click="removeFilter()">Remove Filter</button>
               </div>
             </div>
@@ -116,6 +84,7 @@
 <script>
 import axios from 'axios';
 import router from '../data/router.vue';
+import Accordion from '../common/accordion.vue';
 import Card from '../common/card.vue';
 import Pagination from '../common/pagination.vue';
 import Loader from '../common/loader.vue';
@@ -123,6 +92,7 @@ import Loader from '../common/loader.vue';
 const Shop = {
   name: 'shop',
   components: {
+    Accordion,
     Card,
     Pagination,
     Loader
@@ -175,7 +145,7 @@ const Shop = {
           {id: 9, name: 'Frozen Series', value: 'frozen series'},
           {id: 10, name: 'Legendary', value: 'legendary'},
           {id: 11, name: 'Epic', value: 'epic'},
-          {id: 12, name: 'rare', value: 'rare'},
+          {id: 12, name: 'Rare', value: 'rare'},
           {id: 13, name: 'Uncommon', value: 'uncommon'},
           {id: 14, name: 'Common', value: 'common'},
         ],
@@ -261,7 +231,7 @@ const Shop = {
       }
       this.applyLoading();
     },
-    removeFilter () {
+    removeFilter() {
       this.is.loading = true
       this.activeFilters = [];
       this.types.selected = '';
@@ -332,31 +302,8 @@ export default Shop;
   width: 90%;
 }
 
-.filter-card {
-    position: relative;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    text-align: left;
-}
-
-.card-body {
-  padding: 0px;
-  font-size: 14px;
-}
-
 .list-group-item {
   border-radius: 0px;
-}
-
-.card-header {
-  padding: 0px;
-  border-bottom: 0px;
 }
 
 .badge-pill {
