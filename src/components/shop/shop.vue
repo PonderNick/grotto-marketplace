@@ -45,62 +45,14 @@
                     </div>
                     <div id="collapseOne" class="collapse show" aria-labelledby="filter-header" data-parent="#filter-collapse-list">
                       <div class="card-body">
-                        <div class="list-group">
-                          <a v-on:click="filterItems('backpacks')" class="list-group-item list-group-item-action">
-                            Backpacks
-                            <span class="badge badge-primary badge-pill">{{items.backpacks.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('bannertoken')" class="list-group-item list-group-item-action">
-                            Banner Token
-                            <span class="badge badge-primary badge-pill">{{items.bannertoken.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('contrail')" class="list-group-item list-group-item-action">
-                            Contrail
-                            <span class="badge badge-primary badge-pill">{{items.contrail.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('cosmeticvariant')" class="list-group-item list-group-item-action">
-                            Cosmetic Variant
-                            <span class="badge badge-primary badge-pill">{{items.cosmeticvariant.length}}</span>
-                            </a>
-                          <a v-on:click="filterItems('emote')" class="list-group-item list-group-item-action">
-                            Emote
-                            <span class="badge badge-primary badge-pill">{{items.emote.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('glider')" class="list-group-item list-group-item-action">
-                            Glider
-                            <span class="badge badge-primary badge-pill">{{items.glider.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('loadingscreen')" class="list-group-item list-group-item-action">
-                            Load screen
-                            <span class="badge badge-primary badge-pill">{{items.loadingscreen.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('music')" class="list-group-item list-group-item-action">
-                            Music<span class="badge badge-primary badge-pill">{{items.music.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('outfit')" class="list-group-item list-group-item-action">
-                            Outfit
-                            <span class="badge badge-primary badge-pill">{{items.outfit.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('pet')" class="list-group-item list-group-item-action">
-                            Pet
-                            <span class="badge badge-primary badge-pill">{{items.pet.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('pickaxe')" class="list-group-item list-group-item-action">
-                            Pickaxe
-                            <span class="badge badge-primary badge-pill">{{items.pickaxe.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('spray')" class="list-group-item list-group-item-action">
-                            Spray
-                            <span class="badge badge-primary badge-pill">{{items.spray.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('toy')" class="list-group-item list-group-item-action">
-                            Toy
-                            <span class="badge badge-primary badge-pill">{{items.toy.length}}</span>
-                          </a>
-                          <a v-on:click="filterItems('wrap')" class="list-group-item list-group-item-action">
-                            Wrap
-                            <span class="badge badge-primary badge-pill">{{items.wrap.length}}</span>
-                          </a>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                          </div>
+                          <select v-model="types.selected" v-on:change="addFilter('type', types.selected)" class="custom-select" id="inputGroupSelect01">
+                            <option disabled>Please select one</option>
+                            <option v-for="option in types.options" v-bind:key="option.id" :value="option.value">{{option.name}}</option>
+                          </select>
                         </div>
                       </div>
                     </div>
@@ -117,38 +69,41 @@
                     </div>
                     <div id="rarity-list" class="collapse show" aria-labelledby="filter-header" data-parent="#rarity-collapse-list">
                       <div class="card-body">
-                        <div class="list-group">
-                          <a href="#" class="list-group-item list-group-item-action">DC<span class="badge badge-primary badge-pill">{{items.loadingscreen.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Dark<span class="badge badge-primary badge-pill">{{items.loadingscreen.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Marvel<span class="badge badge-primary badge-pill">{{items.backpacks.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Legendary<span class="badge badge-primary badge-pill">{{items.bannertoken.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Epic<span class="badge badge-primary badge-pill">{{items.contrail.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Rare<span class="badge badge-primary badge-pill">{{items.cosmeticvariant.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Uncommon<span class="badge badge-primary badge-pill">{{items.emote.length}}</span></a>
-                          <a href="#" class="list-group-item list-group-item-action">Common<span class="badge badge-primary badge-pill">{{items.glider.length}}</span></a>
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                          </div>
+                          <select v-model="rarity.selected" v-on:change="addFilter('rarity', rarity.selected)" class="custom-select" id="inputGroupSelect01">
+                            <option disabled>Please select one</option>
+                            <option v-for="option in rarity.options" v-bind:key="option.id" :value="option.value">{{option.name}}</option>
+                          </select>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
+                <button class="btn btn-outline-dark w-100" v-on:click="removeFilter()">Remove Filter</button>
               </div>
             </div>
             <div class="col-10 no-side-padding">
-              <div class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
+              <div v-show="!is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
                 <div class="row">
-                  <card v-for="(item) in displayedItems" v-bind:key="item.id" :cardTitle="item.name">
+                  <card v-for="item in displayedItems" v-bind:key="item.id" :cardTitle="item.name">
                     <img class="item-image" :src="item.images.background" :alt="item.name">
                   </card>
                 </div>
-                <div class="row">
-                  <div class="col-12">
-                    <nav>
-                      <ul class="pagination justify-content-center">
-                        <li v-for="n in pageSize" v-bind:key="n" class="page-item"><a class="page-link" v-on:click="updateVisibleItems(n)">{{n}}</a></li>
-                      </ul>
-                    </nav>
-                  </div>
-                </div>
+                <pagination
+                  :totalItems="items.filteredItems.length"
+                  :itemsPerPage="itemsPerPage"
+                  :currentPage="currentPage"
+                  :paginate="updateVisibleItems"
+                  :paginatePrev="prevPage"
+                  :paginateNext="nextPage"
+                  >
+                </pagination>
+              </div>
+              <div v-show="is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
+                <loader type="page"></loader>
               </div>
             </div>
           </div>
@@ -162,56 +117,87 @@
 import axios from 'axios';
 import router from '../data/router.vue';
 import Card from '../common/card.vue';
+import Pagination from '../common/pagination.vue';
+import Loader from '../common/loader.vue';
 
 const Shop = {
   name: 'shop',
   components: {
     Card,
+    Pagination,
+    Loader
   },
   data() {
     return {
+      is: {
+        loading: false,
+        active: false,
+      },
+      has: {
+        items: false,
+      },
       items: {
+        rawData: [],
         allItems: [],
+        filteredItems: [],
         selectedItems: [],
-        backpacks: [],
-        bannertoken: [],
-        contrail: [],
-        cosmeticvariant: [],
-        emote: [],
-        glider: [],
-        loadingscreen: [],
-        music: [],
-        outfit: [],
-        pet: [],
-        pickaxe: [],
-        spray: [],
-        toy: [],
-        wrap: [],
-        misc: [],
-        rarity: {
-          dc: [],
-          dark: [],
-          marvel: [],
-          legendary: [],
-          epic: [],
-          rare: [],
-          uncommon: [],
-          common: [],
-        }
+      },
+      types: {
+        selected: '',
+        options: [
+          {id: 1, name: 'Backpack', value: 'backpack'},
+          {id: 2, name: 'Banner Token', value: 'bannertoken'},
+          {id: 3, name: 'Contrail', value: 'contrail'},
+          {id: 4, name: 'Cosmetic Variant', value: 'cosmeticvariant'},
+          {id: 5, name: 'Emote', value: 'emote'},
+          {id: 6, name: 'Glider', value: 'glider'},
+          {id: 7, name: 'Load screen', value: 'loadingscreen'},
+          {id: 8, name: 'Music', value: 'music'},
+          {id: 9, name: 'Outfit', value: 'outfit'},
+          {id: 10, name: 'Pet', value: 'pet'},
+          {id: 11, name: 'Pickaxe', value: 'pickaxe'},
+          {id: 12, name: 'Spray', value: 'spray'},
+          {id: 13, name: 'Toy', value: 'toy'},
+          {id: 14, name: 'Wrap', value: 'wrap'},
+        ],
+      },
+      rarity: {
+        selected: '',
+        options: [
+          {id: 1, name: 'DC', value: 'dc'},
+          {id: 2, name: 'Dark', value: 'dark'},
+          {id: 3, name: 'Marvel', value: 'marvel'},
+          {id: 4, name: 'Lava Series', value: 'lava series'},
+          {id: 5, name: 'Icon Series', value: 'icon series'},
+          {id: 6, name: 'Slurp Series', value: 'slurp series'},
+          {id: 7, name: 'Star Wars Series', value: 'star wars series'},
+          {id: 8, name: 'Shadow Series', value: 'shadow series'},
+          {id: 9, name: 'Frozen Series', value: 'frozen series'},
+          {id: 10, name: 'Legendary', value: 'legendary'},
+          {id: 11, name: 'Epic', value: 'epic'},
+          {id: 12, name: 'rare', value: 'rare'},
+          {id: 13, name: 'Uncommon', value: 'uncommon'},
+          {id: 14, name: 'Common', value: 'common'},
+        ],
       },
       currentPage: 1,
-      itemsPerPage: 25,
-      pageSize: 1,
+      itemsPerPage: 50,
+      activeFilters: [],
     };
   },
   computed: {
     displayedItems() {
       const indexOfLastPost = this.currentPage * this.itemsPerPage;
       const indexOfFirstPost = indexOfLastPost - this.itemsPerPage;
-      this.tempPageSize = this.items.selectedItems.length / 50;
-      this.pageSize = parseInt(this.tempPageSize, 10) + (1);
-      
-      return this.items.selectedItems.slice(indexOfFirstPost, indexOfLastPost);
+
+      this.items.filteredItems = this.items.allItems;
+      this.activeFilters.forEach(filter => {
+        this.items.filteredItems = this.items.filteredItems.filter(item => {
+          return item[filter.type].match(filter.value);
+        });
+      });
+
+      return this.items.filteredItems.slice(indexOfFirstPost, indexOfLastPost);
     },
   },
   mounted() {
@@ -219,6 +205,7 @@ const Shop = {
   },
   methods: {
     getItems() {
+      this.is.loading = true;
       return axios({
         method: 'GET',
         url: router.endpoints.items,
@@ -228,140 +215,80 @@ const Shop = {
         },
       })
       .then((response) => {
-        this.items.allItems = response.data.items;
+        this.items.rawData = response.data.items;
       })
       .then(() => {
         this.sortItems();
+        this.is.loading = false;
+        this.has.items = true;
       })
       .catch((error) => {
         alert('Error getting items: ', error);
       });
     },
     sortItems() {
-        let index = 0;
+        var items;
+        var index;
+        var itemsArray = [];
 
-        for (index = 0; index < this.items.allItems.backpack.length; index++) {
-          this.items.backpacks.push(this.items.allItems.backpack[index]);
+        for (items in this.items.rawData) {
+          itemsArray.push(this.items.rawData[items]);
         }
 
-        for (index = 0; index < this.items.allItems.bannertoken.length; index++) {
-          this.items.bannertoken.push(this.items.allItems.bannertoken[index]);
+        for (index = 0; index < itemsArray.length; index++) {
+          this.items.allItems = this.items.allItems.concat(itemsArray[index]);
         }
-
-        for (index = 0; index < this.items.allItems.contrail.length; index++) {
-          this.items.contrail.push(this.items.allItems.contrail[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.cosmeticvariant.length; index++) {
-          this.items.cosmeticvariant.push(this.items.allItems.cosmeticvariant[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.emote.length; index++) {
-          this.items.emote.push(this.items.allItems.emote[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.glider.length; index++) {
-          this.items.glider.push(this.items.allItems.glider[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.loadingscreen.length; index++) {
-          this.items.loadingscreen.push(this.items.allItems.loadingscreen[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.music.length; index++) {
-          this.items.music.push(this.items.allItems.music[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.outfit.length; index++) {
-          this.items.outfit.push(this.items.allItems.outfit[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.pet.length; index++) {
-          this.items.pet.push(this.items.allItems.pet[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.pickaxe.length; index++) {
-          this.items.pickaxe.push(this.items.allItems.pickaxe[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.spray.length; index++) {
-          this.items.spray.push(this.items.allItems.spray[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.toy.length; index++) {
-          this.items.toy.push(this.items.allItems.toy[index]);
-        }
-
-        for (index = 0; index < this.items.allItems.wrap.length; index++) {
-          this.items.wrap.push(this.items.allItems.wrap[index]);
-        }
-
-        this.items.selectedItems = this.items.outfit;
     },
-    filterItems(param) {
-      this.items.selectedItems = [];
-      if (param === 'backpacks') {
-        return this.items.selectedItems =this.items.backpacks;
-      }
+    addFilter(filterType, filter) {
+      this.is.loading = true
+      this.currentPage = 1;
+      let index, j;
 
-      if (param === 'bannertoken') {
-        return this.items.selectedItems =this.items.bannertoken;
-      }
+      this.activeFilters.push({
+        type: filterType,
+        value: filter
+      });
 
-      if (param === 'bannertoken') {
-        return this.items.selectedItems =this.items.bannertoken;
+      for (index = 0; index < this.activeFilters.length; index++) {
+        for (j = 0; j < this.activeFilters.length; j++) {
+          if (index != j) {
+            if (this.activeFilters[index].type == this.activeFilters[j].type) {
+              this.activeFilters[index].value = this.activeFilters[j].value
+              this.activeFilters.splice(j, 1);
+            }
+          }
+        }
       }
-
-      if (param === 'contrail') {
-        return this.items.selectedItems =this.items.contrail;
-      }
-
-      if (param === 'cosmeticvariant') {
-        return this.items.selectedItems =this.items.cosmeticvariant;
-      }
-
-      if (param === 'emote') {
-        return this.items.selectedItems =this.items.emote;
-      }
-
-      if (param === 'glider') {
-        return this.items.selectedItems =this.items.glider;
-      }
-
-      if (param === 'loadingscreen') {
-        return this.items.selectedItems =this.items.loadingscreen;
-      }
-
-      if (param === 'music') {
-        return this.items.selectedItems =this.items.music;
-      }
-
-      if (param === 'outfit') {
-        return this.items.selectedItems =this.items.outfit;
-      }
-
-      if (param === 'pet') {
-        return this.items.selectedItems =this.items.pet;
-      }
-
-      if (param === 'pickaxe') {
-        return this.items.selectedItems =this.items.pickaxe;
-      }
-
-      if (param === 'spray') {
-        return this.items.selectedItems =this.items.spray;
-      }
-
-      if (param === 'toy') {
-        return this.items.selectedItems =this.items.toy;
-      }
-
-      if (param === 'wrap') {
-        return this.items.selectedItems =this.items.wrap;
-      }
+      this.applyLoading();
+    },
+    removeFilter () {
+      this.is.loading = true
+      this.activeFilters = [];
+      this.types.selected = '';
+      this.rarity.selected = '';
+      this.items.filteredItems = this.items.allItems;
+      this.applyLoading();
+    },
+    nextPage() {
+      this.is.loading = true;
+      this.currentPage++;
+      this.applyLoading();
+    },
+    prevPage() {
+      this.is.loading = true;
+      this.currentPage--;
+      this.applyLoading();
     },
     updateVisibleItems(pageNumber) {
+      this.is.loading = true;
+      this.currentPage = 1;
       this.currentPage = pageNumber;
+      this.applyLoading();
+    },
+    applyLoading() {
+      setTimeout(() => {
+        this.is.loading = false;
+      }, 1000)
     },
   },
 }
