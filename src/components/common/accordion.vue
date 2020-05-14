@@ -46,6 +46,9 @@ const Accordion = {
     options: {
       type: Array,
     },
+    onClearEvent: {
+      type: Function,
+    }
   },
   data() {
     return {
@@ -55,6 +58,11 @@ const Accordion = {
       }
     };
   },
+  methods: {
+    clearFilter() {
+      this.selected.item = '';
+    },
+  }
 };
 
 export default Accordion;

@@ -35,14 +35,17 @@
             <div class="col-2 mx-auto no-side-padding">
               <div class="filters-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
                 <accordion
+                  ref="filterType"
                   title="Type"
                   filterBy="type"
                   :selectedItem="types.selected"
                   :onChangeEvent="addFilter"
                   :options="types.options"
+
                   >
                 </accordion>
                 <accordion
+                  ref="filterRarity"
                   title="Rarity"
                   filterBy="rarity"
                   :selectedItem="rarity.selected"
@@ -54,23 +57,33 @@
               </div>
             </div>
             <div class="col-10 no-side-padding">
-              <div v-show="!is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
-                <div class="row">
-                  <card v-for="item in displayedItems" v-bind:key="item.id" :cardTitle="item.name">
-                    <img class="item-image" :src="item.images.background" :alt="item.name">
-                  </card>
-                </div>
-                <pagination
-                  :totalItems="items.filteredItems.length"
-                  :itemsPerPage="itemsPerPage"
-                  :currentPage="currentPage"
-                  :paginate="updateVisibleItems"
-                  :paginatePrev="prevPage"
-                  :paginateNext="nextPage"
-                  >
-                </pagination>
+              <div v-if="!is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
+                <span v-if="has.items" class="row">
+                  <div class="row">
+                    <card v-for="item in displayedItems" v-bind:key="item.id" :cardTitle="item.name">
+                      <img class="item-image" :src="item.images.background" :alt="item.name">
+                    </card>
+                  </div>
+                  <div class="row w-100">
+                    <pagination
+                      ref="pagination"
+                      :totalItems="items.filteredItems.length"
+                      :itemsPerPage="itemsPerPage"
+                      :currentPage="currentPage"
+                      :paginate="updateVisibleItems"
+                      :paginatePrev="prevPage"
+                      :paginateNext="nextPage"
+                      >
+                    </pagination>
+                  </div>
+                </span>
+                <span v-if="!has.items" class="row">
+                  <div class="col-12">
+                    <h1>No Results...</h1>
+                  </div>
+                </span>
               </div>
-              <div v-show="is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
+              <div v-if="is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
                 <loader type="page"></loader>
               </div>
             </div>
@@ -101,7 +114,6 @@ const Shop = {
     return {
       is: {
         loading: false,
-        active: false,
       },
       has: {
         items: false,
@@ -167,6 +179,10 @@ const Shop = {
         });
       });
 
+      this.checkItems();
+
+      console.log(this.items.filteredItems);
+
       return this.items.filteredItems.slice(indexOfFirstPost, indexOfLastPost);
     },
   },
@@ -229,14 +245,27 @@ const Shop = {
           }
         }
       }
+      this.displayedItems;
       this.applyLoading();
+    },
+    checkItems() {
+      if (this.items.filteredItems.length === 0) {
+        this.has.items = false;
+      }
+      else {
+        this.has.items = true;
+      }
     },
     removeFilter() {
       this.is.loading = true
+      this.$refs.filterType.clearFilter();
+      this.$refs.filterRarity.clearFilter();
       this.activeFilters = [];
       this.types.selected = '';
       this.rarity.selected = '';
       this.items.filteredItems = this.items.allItems;
+      this.currentPage = 1;
+      this.has.items = true;
       this.applyLoading();
     },
     nextPage() {
@@ -300,15 +329,6 @@ export default Shop;
   margin-right: auto;
   border-radius: .25rem;
   width: 90%;
-}
-
-.list-group-item {
-  border-radius: 0px;
-}
-
-.badge-pill {
-  position: absolute;
-  right: 10px;
 }
 
 .items-wrapper {

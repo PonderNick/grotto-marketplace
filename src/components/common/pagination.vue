@@ -1,10 +1,14 @@
 <template>
-  <div class="row pagination-wrapper">
+  <div class="row w-100 pagination-wrapper">
     <div class="col-12">
       <nav>
         <ul class="pagination justify-content-center">
-          <li><a class="page-link" v-on:click="paginatePrev()">Previous Page</a></li>
-          <li><a class="page-link" v-on:click="paginateNext()">Next Page</a></li>
+          <li v-bind:class="{ 'disabled': !has.previousPages }" class="page-item">
+            <a class="page-link" v-on:click="paginatePrev()">Previous Page</a>
+          </li>
+          <li v-bind:class="{ 'disabled': !has.nextPages }" class="page-item ">
+            <a class="page-link" v-on:click="paginateNext()">Next Page</a>
+          </li>
         </ul>
         <p class="page-number">Page {{currentPage}} of {{calculatePages}}</p>
       </nav>
@@ -47,7 +51,7 @@ const Pagination = {
       pageCounter: 0,
       has: {
         previousPages: false,
-        nextPages: false,
+        nextPages: true,
       }
     };
   },
@@ -56,11 +60,25 @@ const Pagination = {
       let index;
       this.pageCounter = 0;
 
-      for (index = 0; index <= (this.totalItems / this.itemsPerPage); index++ ) {
+      for (index = 0; index <= Math.ceil(this.totalItems / this.itemsPerPage); index++ ) {
         this.pageCounter = index;
       }
 
-      return this.pageCounter + 1;
+      if (this.currentPage === 1) {
+        this.has.previousPages = false;
+      }
+      else {
+        this.has.previousPages = true;
+      }
+
+      if (this.currentPage === this.pageCounter) {
+        this.has.nextPages = false;
+      }
+      else {
+        this.has.nextPages = true;
+      }
+
+      return this.pageCounter;
     },
   },
 };
@@ -72,5 +90,9 @@ export default Pagination;
 
 .page-number {
   padding: .5rem .75rem;
+}
+
+.page-item {
+  width: 150px;
 }
 </style>
