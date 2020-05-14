@@ -181,8 +181,6 @@ const Shop = {
 
       this.checkItems();
 
-      console.log(this.items.filteredItems);
-
       return this.items.filteredItems.slice(indexOfFirstPost, indexOfLastPost);
     },
   },
