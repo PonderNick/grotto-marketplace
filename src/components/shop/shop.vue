@@ -1,11 +1,11 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid no-side-padding">
     <div class="shop-content">
       <div class="shop-content-header">
         <div class="row h-100 no-side-margin">
           <div class="col-12 no-side-padding">
             <div class="jumbotron jumbotron-fluid">
-              <div class="container-fluid">
+              <div class="container-fluid no-side-padding">
                 <div id="banner-indicators" class="carousel slide" data-ride="carousel">
                   <ol class="carousel-indicators">
                     <li data-target="#banner-indicators" data-slide-to="0" class="active"></li>
@@ -29,7 +29,7 @@
           </div>
         </div>
       </div>
-      <div class="container-fluid">
+      <div class="container-fluid no-side-padding">
         <div class="shop-content-body">
           <div class="row h-100 w-100">
             <div class="col-2 mx-auto no-side-padding">
@@ -295,7 +295,6 @@ export default Shop;
 <style scoped>
 
 .shop-content {
-  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   height: 100%;
@@ -308,17 +307,13 @@ export default Shop;
 
 .jumbotron {
   background-color: transparent;
+  margin-bottom: 0rem;
   padding: 0px;
-}
-
-.banner-image {
-  border-radius: .25rem;
 }
 
 .shop-content-body {
   height: 100%;
   background-color: whitesmoke;
-  border-radius: .25rem;
   padding-top: 25px;
 }
 

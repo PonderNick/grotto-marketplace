@@ -9,21 +9,6 @@
   </router-link>
   <div class="collapse navbar-collapse" id="collapsed-nav">
     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <img src="../assets/avatar.png" width="30" height="30" class="d-inline-block align-top" alt="avatar">
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <router-link class="dropdown-item" :to="{ name: 'Profile' }">
-            Profile
-          </router-link>
-          <router-link class="dropdown-item" :to="{ name: 'Inventory' }">
-            Inventory
-          </router-link>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
       <li class="nav-item">
         <router-link class="nav-link" :to="{ name: 'Shop' }">
           Shop
