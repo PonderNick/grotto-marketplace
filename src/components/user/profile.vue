@@ -82,10 +82,29 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
 const Profile = {
   name: 'profile',
-}
+  computed: {
+    ...mapState({
+      loggedIn: state => state.is.loggedIn,
+    })
+  },
+  mounted() {
+    this.checkAuth();
+  },
+  methods: {
+    checkAuth() {
+      if (this.loggedIn) {
+        return;
+      } else {
+        return this.$router.push(`/`);
+      }
+    },
+  }
+};
+
 export default Profile;
 </script>
 

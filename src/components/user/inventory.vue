@@ -11,11 +11,30 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 
-const Profile = {
-  name: 'profile',
-}
-export default Profile;
+const Inventory = {
+  name: 'inventory',
+  computed: {
+    ...mapState({
+      loggedIn: state => state.is.loggedIn,
+    })
+  },
+  mounted() {
+    this.checkAuth();
+  },
+  methods: {
+    checkAuth() {
+      if (this.loggedIn) {
+        return;
+      } else {
+        return this.$router.push(`/`);
+      }
+    },
+  }
+};
+
+export default Inventory;
 </script>
 
 <style scoped>

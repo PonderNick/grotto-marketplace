@@ -10,15 +10,13 @@
     </div>
     <div class="collapse show">
       <div class="card-body">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <label class="input-group-text">Options</label>
+          <div class="input-group mb-3">
+            <select v-if="type === 'select'" v-model="selected.item" v-on:change="onChangeEvent(filter, selected.item)" class="custom-select">
+              <option disabled>Please select one</option>
+              <option v-for="opt in options" v-bind:key="opt.id" :value="opt.value">{{opt.name}}</option>
+            </select>
+            <input v-if="type === 'input'" v-model="selected.item" v-on:input="onChangeEvent(filter, selected.item)" type="text" class="form-control" placeholder="Enter item name" autocomplete="on">
           </div>
-          <select v-model="selected.item" v-on:change="onChangeEvent(filter, selected.item)" class="custom-select">
-            <option disabled>Please select one</option>
-            <option v-for="opt in options" v-bind:key="opt.id" :value="opt.value">{{opt.name}}</option>
-          </select>
-        </div>
       </div>
     </div>
   </div>
@@ -31,6 +29,9 @@ const Accordion = {
   name: 'accordion',
   props:  {
     title: {
+      type: String
+    },
+    type: {
       type: String
     },
     filterBy: {

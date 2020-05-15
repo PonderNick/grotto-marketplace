@@ -4,7 +4,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <router-link class="navbar-brand" :to="{ name: 'Welcome' }">
-    <img src="../assets/login-image.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+    <img src="../../assets/login-image.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
     The Grotto
   </router-link>
   <div class="collapse navbar-collapse" id="collapsed-nav">
@@ -24,7 +24,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import Store from '../store.js';
+import Store from '../../store.js';
 import { Auth } from 'aws-amplify';
 
 const navBar = {

@@ -35,19 +35,29 @@
             <div class="col-2 mx-auto no-side-padding">
               <div class="filters-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
                 <accordion
+                  ref="filterName"
+                  title="Name"
+                  filterBy="name"
+                  type="input"
+                  :selectedItem="name.selected"
+                  :onChangeEvent="addFilter"
+                  >
+                </accordion>
+                <accordion
                   ref="filterType"
                   title="Type"
                   filterBy="type"
+                  type="select"
                   :selectedItem="types.selected"
                   :onChangeEvent="addFilter"
                   :options="types.options"
-
                   >
                 </accordion>
                 <accordion
                   ref="filterRarity"
                   title="Rarity"
                   filterBy="rarity"
+                  type="select"
                   :selectedItem="rarity.selected"
                   :onChangeEvent="addFilter"
                   :options="rarity.options"
@@ -59,7 +69,7 @@
             <div class="col-10 no-side-padding">
               <div v-if="!is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
                 <span v-if="has.items" class="row">
-                  <div class="row">
+                  <div class="row w-100">
                     <card v-for="item in displayedItems" v-bind:key="item.id" :cardTitle="item.name">
                       <img class="item-image" :src="item.images.background" :alt="item.name">
                     </card>
@@ -101,6 +111,7 @@ import Accordion from '../common/accordion.vue';
 import Card from '../common/card.vue';
 import Pagination from '../common/pagination.vue';
 import Loader from '../common/loader.vue';
+import { mapState } from 'vuex';
 
 const Shop = {
   name: 'shop',
@@ -123,6 +134,9 @@ const Shop = {
         allItems: [],
         filteredItems: [],
         selectedItems: [],
+      },
+      name: {
+        selected: '',
       },
       types: {
         selected: '',
@@ -175,6 +189,7 @@ const Shop = {
       this.items.filteredItems = this.items.allItems;
       this.activeFilters.forEach(filter => {
         this.items.filteredItems = this.items.filteredItems.filter(item => {
+          console.log('item: ', item);
           return item[filter.type].match(filter.value);
         });
       });
@@ -183,11 +198,22 @@ const Shop = {
 
       return this.items.filteredItems.slice(indexOfFirstPost, indexOfLastPost);
     },
+    ...mapState({
+      loggedIn: state => state.is.loggedIn,
+    })
   },
   mounted() {
+    this.checkAuth();
     this.getItems();
   },
   methods: {
+    checkAuth() {
+      if (this.loggedIn) {
+        return;
+      } else {
+        return this.$router.push(`/`);
+      }
+    },
     getItems() {
       this.is.loading = true;
       return axios({
@@ -256,9 +282,11 @@ const Shop = {
     },
     removeFilter() {
       this.is.loading = true
+      this.$refs.filterName.clearFilter();
       this.$refs.filterType.clearFilter();
       this.$refs.filterRarity.clearFilter();
       this.activeFilters = [];
+      this.name.selected = '';
       this.types.selected = '';
       this.rarity.selected = '';
       this.items.filteredItems = this.items.allItems;
