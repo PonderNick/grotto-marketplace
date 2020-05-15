@@ -189,8 +189,8 @@ const Shop = {
       this.items.filteredItems = this.items.allItems;
       this.activeFilters.forEach(filter => {
         this.items.filteredItems = this.items.filteredItems.filter(item => {
-          console.log('item: ', item);
-          return item[filter.type].match(filter.value);
+          let regex = new RegExp(filter.value, 'i');
+          return item[filter.type].match(regex);
         });
       });
 
