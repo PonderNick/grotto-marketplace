@@ -63,6 +63,16 @@
                   :options="rarity.options"
                   >
                 </accordion>
+                <accordion
+                  ref="filterPopularity"
+                  title="Popularity"
+                  filterBy="interest"
+                  type="select"
+                  :selectedItem="popularity.selected"
+                  :onChangeEvent="addFilter"
+                  :options="popularity.options"
+                  >
+                </accordion>
                 <button class="btn btn-outline-dark w-100" v-on:click="removeFilter()">Remove Filter</button>
               </div>
             </div>
@@ -176,6 +186,13 @@ const Shop = {
           {id: 14, name: 'Common', value: 'common'},
         ],
       },
+      popularity: {
+        selected: '',
+        options: [
+          {id: 1, name: 'High - Low', value: 'high'},
+          {id: 2, name: 'Low - High', value: 'low'},
+        ]
+      },
       currentPage: 1,
       itemsPerPage: 50,
       activeFilters: [],
@@ -188,6 +205,21 @@ const Shop = {
 
       this.items.filteredItems = this.items.allItems;
       this.activeFilters.forEach(filter => {
+        
+        if (filter.type === 'interest') {
+          if (filter.value === 'high') {
+            return this.items.filteredItems.sort((a,b) => {
+              return b.interest - a.interest;
+            });
+          }
+
+          if (filter.value === 'low') {
+            return this.items.filteredItems = this.items.filteredItems.sort((a,b) => {
+              return a.interest - b.interest;
+            });
+          }
+        }
+
         this.items.filteredItems = this.items.filteredItems.filter(item => {
           let regex = new RegExp(filter.value, 'i');
           return item[filter.type].match(regex);
@@ -285,10 +317,12 @@ const Shop = {
       this.$refs.filterName.clearFilter();
       this.$refs.filterType.clearFilter();
       this.$refs.filterRarity.clearFilter();
+      this.$refs.filterPopularity.clearFilter();
       this.activeFilters = [];
       this.name.selected = '';
       this.types.selected = '';
       this.rarity.selected = '';
+      this.popularity.selected = '';
       this.items.filteredItems = this.items.allItems;
       this.currentPage = 1;
       this.has.items = true;
