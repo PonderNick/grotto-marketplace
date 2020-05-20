@@ -80,8 +80,12 @@
               <div v-if="!is.loading" class="items-wrapper mx-auto shadow p-3 mb-5 bg-white rounded">
                 <span v-if="has.items" class="row">
                   <div class="row w-100">
-                    <card v-for="item in displayedItems" v-bind:key="item.id" :cardTitle="item.name">
-                      <img class="item-image" :src="item.images.background" :alt="item.name">
+                    <card
+                      v-for="item in displayedItems"
+                      v-bind:key="item.id"
+                      :cardTitle="item.name"
+                      >
+                      <img v-on:click="goToItem(item)" class="item-image" :src="item.images.background" :alt="item.name">
                     </card>
                   </div>
                   <div class="row w-100">
@@ -204,22 +208,19 @@ const Shop = {
       const indexOfFirstPost = indexOfLastPost - this.itemsPerPage;
 
       this.items.filteredItems = this.items.allItems;
-      this.activeFilters.forEach(filter => {
-        
+      this.activeFilters.forEach(filter => {        
         if (filter.type === 'interest') {
           if (filter.value === 'high') {
-            return this.items.filteredItems.sort((a,b) => {
+            return this.items.filteredItems = this.items.filteredItems.sort((a,b) => {
               return b.interest - a.interest;
             });
           }
-
           if (filter.value === 'low') {
             return this.items.filteredItems = this.items.filteredItems.sort((a,b) => {
               return a.interest - b.interest;
             });
           }
         }
-
         this.items.filteredItems = this.items.filteredItems.filter(item => {
           let regex = new RegExp(filter.value, 'i');
           return item[filter.type].match(regex);
@@ -323,10 +324,10 @@ const Shop = {
       this.types.selected = '';
       this.rarity.selected = '';
       this.popularity.selected = '';
-      this.items.filteredItems = this.items.allItems;
       this.currentPage = 1;
       this.has.items = true;
       this.applyLoading();
+      this.displayedItems;
     },
     nextPage() {
       this.is.loading = true;
@@ -343,6 +344,11 @@ const Shop = {
       this.currentPage = 1;
       this.currentPage = pageNumber;
       this.applyLoading();
+    },
+    goToItem(item) {
+      var Item = JSON.stringify(item);
+      Item = encodeURIComponent(Item);
+      this.$router.push(`/item?item=${Item}`);
     },
     applyLoading() {
       setTimeout(() => {

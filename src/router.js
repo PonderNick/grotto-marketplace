@@ -5,6 +5,7 @@ import Welcome from './components/login/welcome.vue';
 import Profile from './components/user/profile.vue';
 import Inventory from './components/user/inventory.vue';
 import Shop from './components/shop/shop.vue';
+import Item from './components/shop/item.vue';
 
 Vue.use(Router);
 
@@ -35,6 +36,11 @@ const Routes = new Router({
       path: "/shop",
       name: "Shop",
       component: Shop,
+    },
+    {
+      path: "/item",
+      name: "Item",
+      component: Item,
     },
   ]
 });
