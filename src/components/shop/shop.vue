@@ -238,6 +238,7 @@ const Shop = {
   mounted() {
     this.checkAuth();
     this.getItems();
+    this.scrollTop();
   },
   methods: {
     checkAuth() {
@@ -354,6 +355,9 @@ const Shop = {
       setTimeout(() => {
         this.is.loading = false;
       }, 1000)
+    },
+    scrollTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   },
 }

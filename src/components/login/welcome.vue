@@ -72,6 +72,8 @@
                       <p>Nicholas Winter:</p>
                       <ul>
                         <li>CV: http://www.nick-winter.com</li>
+                        <li>Bitbucket: https://bitbucket.org/NickWT/</li>
+                        <li>Github: https://github.com/PonderNick</li>
                       </ul>
                     </div>
                   </div>
@@ -97,6 +99,7 @@ const Welcome = {
   },
   mounted() {
     this.checkAuth();
+    this.scrollTop();
   },
   methods: {
     checkAuth() {
@@ -105,6 +108,9 @@ const Welcome = {
       } else {
         return this.$router.push(`/`);
       }
+    },
+    scrollTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   }
 };

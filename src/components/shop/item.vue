@@ -2,6 +2,7 @@
   <div class="container h-100">
     <div class="row h-100">
       <div class="col-sm-6 my-auto">
+        <img v-on:click="goBack()" class="back-button" src="../../assets/back-button.png" alt="back-button"/>
         <img class="item-image" :src="item.images.background ? item.images.background : item.images.full_size" :alt="item.name">
       </div>
       <div class="col-sm-6 my-auto">
@@ -56,10 +57,19 @@ const Item = {
       item: this.getItem(),
     };
   },
+  mounted() {
+    this.scrollTop();
+  },
   methods: {
     getItem() {
       this.item = JSON.parse(this.$route.query.item);
       return  this.item;
+    },
+    goBack() {
+      this.$router.push('/shop');
+    },
+    scrollTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
   },
 };
@@ -68,6 +78,17 @@ export default Item;
 </script>
 
 <style scoped>
+.back-button {
+  position: absolute;
+  top: 0px;
+  left: -100px;
+  height: 100px;
+}
+
+.back-button:hover {
+  cursor: pointer;
+}
+
 .item-info {
   height: 512px;
 }
