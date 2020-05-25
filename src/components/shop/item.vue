@@ -1,6 +1,11 @@
 <template>
   <div class="container h-100">
-    <div class="row h-100">
+    <div class="row h-10 mt-5">
+      <div class="col-sm-12 header">
+        <h1>{{ item.name }}</h1>
+      </div>
+    </div>
+    <div class="row h-90 mt-5">
       <div class="col-sm-6 my-auto">
         <img v-on:click="goBack()" class="back-button" src="../../assets/back-button.png" alt="back-button"/>
         <img class="item-image" :src="item.images.background ? item.images.background : item.images.full_size" :alt="item.name">
@@ -9,7 +14,7 @@
         <div class="item-info">
           <div class="card text-center">
             <div class="card-header h-100">
-              <h3 class="card-title my-auto">{{ item.name }}</h3>
+              <h3 class="card-title my-auto">Item Overview</h3>
             </div>
             <div class="card-body">
               <h5 class="card-title"></h5>
@@ -78,15 +83,20 @@ export default Item;
 </script>
 
 <style scoped>
+.header {
+  color: whitesmoke;
+}
 .back-button {
   position: absolute;
   top: 0px;
   left: -100px;
   height: 100px;
+  transition: transform .3s;
 }
 
 .back-button:hover {
   cursor: pointer;
+  transform: scale(1.25);
 }
 
 .item-info {
