@@ -26,17 +26,17 @@
               <div class="shadow p-3 mb-5 bg-white rounded">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Technologies</h3>
+                    <h3 class="card-title"><strong>Technologies</strong></h3>
                   </div>
                   <img class="card-img site-info" src="../../assets/welcome-card1.png" alt="Card image">
                   <div class="card-img-overlay">
-                    <div class="card-content shadow p-3 mb-5 bg-white rounded">
-                      <p>This website was created utilising the following technologies:</p>
+                    <div class="card-content shadow p-3 mb-5 bg-white rounded text-center">
+                      <p><strong>This website was created utilising the following technologies:</strong></p>
                       <ul>
-                        <li>Languages: HTML5, CSS, Javascript(NodeJS)</li>
-                        <li>Frameworks: VueJS, Bootstrap</li>
-                        <li>Cloud Services: AWS Cognito</li>
-                        <li>API: FortniteAPI.io</li>
+                        <li><strong>Languages:</strong> HTML5, CSS, Javascript(NodeJS)</li>
+                        <li><strong>Frameworks:</strong> VueJS, Bootstrap</li>
+                        <li><strong>Cloud Services:</strong> AWS Cognito</li>
+                        <li><strong>API:</strong> FortniteAPI.io</li>
                       </ul>
                     </div>
                   </div>
@@ -47,11 +47,11 @@
               <div class="shadow p-3 mb-5 bg-white rounded">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">Website Features</h3>
+                    <h3 class="card-title"><strong>Website Features</strong></h3>
                   </div>
                   <img class="card-img site-features" src="../../assets/welcome-card2.png" alt="Card image">
                   <div class="card-img-overlay">
-                    <div class="card-content shadow p-3 mb-5 bg-white rounded">
+                    <div class="card-content shadow p-3 mb-5 bg-white rounded text-center">
                       <ul>
                         <li>Filter and search for items within Fortnite Battle Royal.</li>
                       </ul>
@@ -64,16 +64,16 @@
               <div class="shadow p-3 mb-5 bg-white rounded">
                 <div class="card">
                   <div class="card-header">
-                    <h3 class="card-title">About the Author</h3>
+                    <h3 class="card-title"><strong>About the Author</strong></h3>
                   </div>
                   <img class="card-img about-author" src="../../assets/welcome-card3.png" alt="Card image">
                   <div class="card-img-overlay">
-                    <div class="card-content shadow p-3 mb-5 bg-white rounded">
-                      <p>Nicholas Winter:</p>
+                    <div class="card-content shadow p-3 mb-5 bg-white rounded text-center">
+                      <p><strong>Nicholas Winter:</strong></p>
                       <ul>
-                        <li>CV: http://www.nick-winter.com</li>
-                        <li>Bitbucket: https://bitbucket.org/NickWT/</li>
-                        <li>Github: https://github.com/PonderNick</li>
+                        <li><strong>CV:</strong> http://www.nick-winter.com</li>
+                        <li><strong>Bitbucket:</strong> https://bitbucket.org/NickWT/</li>
+                        <li><strong>Github:</strong> https://github.com/PonderNick</li>
                       </ul>
                     </div>
                   </div>
@@ -151,6 +151,14 @@ export default Welcome;
   margin-right: auto;
 }
 
+.card {
+  color: darkgray;
+}
+
+li {
+  list-style: none;
+}
+
 .card-content {
   margin-top: 10px;
   text-align: left;
@@ -164,8 +172,7 @@ export default Welcome;
 }
 
 .card-img-overlay:hover {
-  color: black;
-  background: rgba(245,245,245, 1);
+  color: gray;
   opacity: 1;
   animation: fade-in;
   animation-duration: 2s;

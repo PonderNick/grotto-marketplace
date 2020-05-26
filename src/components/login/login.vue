@@ -46,7 +46,8 @@
                 <br/>
                 <button title="goToSignup" type="button" class="btn btn-dark" v-on:click="createAccount()">Create Account <i class="fas fa-plus"></i></button>
                 &nbsp;
-                <button type="button" class="btn btn-outline-dark" v-on:click="login()">Log in <i class="fa fa-paper-plane"></i></button>
+                <button v-if="!is.loading" type="button" class="btn btn-outline-dark" v-on:click="login()">Log in <i class="fa fa-paper-plane"></i></button>
+                <button v-if="is.loading" type="button" class="btn btn-outline-dark">Log in <i class="fas fa-circle-notch fa-spin"></i></button>
               </div>
             </form>
           </div>
@@ -117,7 +118,8 @@
                 <p>{{error.message}}</p>
               </div>
               <div class="login-button">
-                <button type="button" class="btn btn-outline-dark" v-on:click="signUp()">Sign Up <i class="fas fa-user-plus"></i></button>
+                <button v-if="!is.loading" type="button" class="btn btn-outline-dark" v-on:click="signUp()">Sign Up <i class="fas fa-user-plus"></i></button>
+                <button v-if="is.loading" type="button" class="btn btn-outline-dark">Sign Up <i class="fas fa-circle-notch fa-spin"></i></button>
               </div>
             </form>
           </div>
@@ -146,7 +148,8 @@
                     <p>{{error.message}}</p>
                   </div>
                   <div class="login-button">
-                    <button type="button" class="btn btn-outline-dark" v-on:click="sendVerification()">Send verification code <i class="fas fa-paper-plane"></i></button>
+                    <button v-if="!is.loading" type="button" class="btn btn-outline-dark" v-on:click="sendVerification()">Send verification code <i class="fas fa-paper-plane"></i></button>
+                    <button v-if="is.loading" type="button" class="btn btn-outline-dark">Send verification code <i class="fas fa-circle-notch fa-spin"></i></button>
                   </div>
                 </div>
               </div>
@@ -199,7 +202,8 @@
                   <p>{{error.message}}</p>
                 </div>
                 <div class="login-button">
-                  <button type="button" class="btn btn-outline-dark" v-on:click="resetPassword()">Reset Password <i class="fas fa-user-plus"></i></button>
+                  <button v-if="!is.loading" type="button" class="btn btn-outline-dark" v-on:click="resetPassword()">Reset Password <i class="fas fa-user-plus"></i></button>
+                  <button v-if="is.loading" type="button" class="btn btn-outline-dark">Reset Password <i class="fas fa-circle-notch fa-spin"></i></button>
                 </div>
               </div>
             </form>
@@ -248,6 +252,7 @@ const login = {
         }
       },
       is: {
+        loading: false,
         creatingAccount: false,
         resettingPassword: false,
         awaiting: {
@@ -275,6 +280,7 @@ const login = {
   },
   methods: {
     login() {
+      this.is.loading = true;
       let username = this.user.username;
       let password = this.user.password;
 
@@ -283,15 +289,18 @@ const login = {
         password,
       })
       .then(() => {
+        this.is.loading = false;
         store.commit('setAuth');
         this.$router.push('/welcome');
       })
       .catch((error) => {
+        this.is.loading = false;
         this.error.login = true;
         this.error.message = error.message;
       });
     },
     signUp() {
+      this.is.loading = true;
       let username = this.user.signUp.username;
       let email = this.user.signUp.email;
       let password = this.user.signUp.password;
@@ -307,20 +316,21 @@ const login = {
           }
         })
         .then(() => {
+          this.is.loading = false;
           this.is.awaiting.emailConfirmation = true;
           this.backToLogin();
         })
         .catch((error) => {
+          this.is.loading = false;
           this.error.creatingAccount = true;
           this.error.message = error.message;
         });
       })
       .catch((error) => {
+        this.is.loading = false;
         this.error.creatingAccount = true;
         this.error.message = error;
       });
-      //successful signup
-      //failed signup
     },
     signUpValidations() {
       if (this.user.signUp.username === '') {
@@ -358,16 +368,21 @@ const login = {
       return Promise.resolve();
     },
     sendVerification() {
+      this.is.loading = true;
       return Auth.forgotPassword(this.user.reset.email)
       .then(() => {
+        this.is.loading = false;
         this.is.awaiting.resetCode = false;
       })
       .catch((error) => {
+        this.is.loading = false;
         this.error.verify = true;
         this.error.message = error.message
       });
     },
     resetPassword() {
+      this.is.loading = true;
+
       return this.resetPasswordValidations()
       .then(() => {
         return Auth.forgotPasswordSubmit(
@@ -376,15 +391,18 @@ const login = {
           this.user.reset.password
         )
         .then(() => {
+          this.is.loading = false;
           this.is.resettingPassword = false;
           this.has.resetPassword = true;
         })
         .catch((error) => {
+          this.is.loading = false;
           this.error.reset = true;
           this.error.message = error.message;
         });
       })
       .catch((error) => {
+        this.is.loading = false;
         this.error.reset = true;
         this.error.message = error;
       });

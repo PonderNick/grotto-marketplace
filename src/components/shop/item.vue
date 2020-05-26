@@ -1,5 +1,5 @@
 <template>
-  <div class="container h-100">
+  <div class="container">
     <div class="row h-10 mt-5">
       <div class="col-sm-12 header">
         <h1>{{ item.name }}</h1>
@@ -17,34 +17,50 @@
               <h3 class="card-title my-auto">Item Overview</h3>
             </div>
             <div class="card-body">
-              <h5 class="card-title"></h5>
-              <p class="card-text">{{ item.description }}</p>
+              <p class="card-text"><strong>{{ item.description }}</strong></p>
               <form class="text-left">
                 <div class="form-group row">
-                  <label class="col-sm-5 col-form-label">Price</label>
+                  <label class="col-sm-5 col-form-label"><strong>Price</strong></label>
                   <div class="col-sm-7">
                     <input type="text" readonly class="form-control-plaintext" :value="item.price">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-5 col-form-label">Type</label>
+                  <label class="col-sm-5 col-form-label"><strong>Type</strong></label>
                   <div class="col-sm-7">
                     <input type="text" readonly class="form-control-plaintext" :value="item.type">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-5 col-form-label">Popularity</label>
+                  <label class="col-sm-5 col-form-label"><strong>Popularity</strong></label>
                   <div class="col-sm-7">
                     <input type="text" readonly class="form-control-plaintext" :value="item.interest">
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label class="col-sm-5 col-form-label">Reactive</label>
+                  <label class="col-sm-5 col-form-label"><strong>Reactive</strong></label>
                   <div class="col-sm-7">
                     <input type="text" readonly class="form-control-plaintext" :value="item.reactive">
                   </div>
                 </div>
               </form>
+              <div class="row">
+                <div class="col-sm-12">
+                <div id="banner-indicators" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner banner-image">
+                    <div class="carousel-item active">
+                      <img src="../../assets/Banner.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="../../assets/Banner2.png" class="d-block w-100" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                      <img src="../../assets/Banner3.png" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -107,8 +123,16 @@ export default Item;
   max-height: 512px;
 }
 
+.item-icon {
+  max-height: 150px;
+}
+
 .card-body {
   height: 452px;
+}
+
+.carousel-inner {
+  border-radius: .25rem;
 }
 
 </style>
